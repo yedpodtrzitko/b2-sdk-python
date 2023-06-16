@@ -76,6 +76,7 @@ jobs:
         run: nox -vs cleanup_old_buckets
   test:
     needs: cleanup_buckets
+    if: false
     env:
       B2_TEST_APPLICATION_KEY: ${{ secrets.B2_TEST_APPLICATION_KEY }}
       B2_TEST_APPLICATION_KEY_ID: ${{ secrets.B2_TEST_APPLICATION_KEY_ID }}

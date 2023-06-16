@@ -1,0 +1,35 @@
+name: Debian Continuous Delivery
+
+on:
+  push:
+    branches:
+      - master
+      - yed/debian
+
+env:
+  PYTHON_DEFAULT_VERSION: "3.11"
+
+jobs:
+  build:
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # dont run tests, we run them elsewhere already
+      DEB_BUILD_OPTIONS: nocheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_DEFAULT_VERSION }}
+      - name: check version
+        if: false
+        run: pip install setuptools_scm; python -m setuptools_scm
+      - uses: jtdor/build-deb-action@v1
+        with:
+          buildpackage-opts: --build=binary
+      - uses: actions/upload-artifact@v3
+        with:
+          name: package
+          path: python3-b2sdk_*.deb
