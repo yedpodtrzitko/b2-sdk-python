@@ -1,0 +1,25 @@
+name: Continuous Delivery
+
+on:
+  push:
+    branches: [yed/debian]
+    #tags: 'v*'  # push events to matching v*, i.e. v1.0, v20.15.10
+
+env:
+  PYTHON_DEFAULT_VERSION: "3.11"
+
+jobs:
+  build:
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_DEFAULT_VERSION }}
+      - uses: jtdor/build-deb-action@v1
+        with:
+          buildpackage-opts: --build=binary
