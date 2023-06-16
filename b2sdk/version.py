@@ -11,11 +11,16 @@
 import sys
 
 try:
-    from importlib.metadata import version
+    from importlib.metadata import version, PackageNotFoundError
 except ModuleNotFoundError:
-    from importlib_metadata import version  # for python 3.7
+    from importlib_metadata import version, PackageNotFoundError  # for python 3.7
 
-VERSION = version('b2sdk')
+try:
+    VERSION = version('b2sdk')
+except PackageNotFoundError:
+    from pkg_resources import get_distribution, DistributionNotFound
+
+    VERSION = get_distribution("b2sdk").version
 
 PYTHON_VERSION = '.'.join(map(str, sys.version_info[:3]))  # something like: 3.9.1
 
