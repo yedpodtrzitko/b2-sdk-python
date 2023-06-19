@@ -31,10 +31,6 @@ jobs:
         with:
           buildpackage-opts: --build=binary
 
-      - uses: qualk/upload-artifact-as-is@master
-        with:
-          path: debian/artifacts/*.deb
-
       - name: Upload to B2
         working-directory: debian/artifacts
         run: |
