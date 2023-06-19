@@ -18,7 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Infrastructure
 * Replaced `pyflakes` with `ruff` for linting
-* Add Debian package build to CI
+* Add Debian package build to CD
 
 ## [1.21.0] - 2023-04-17
 
